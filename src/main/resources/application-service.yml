@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: service
+  jackson:
+    deserialization:
+      accept-float-as-int: false
+
+server:
+  port:  8080
+  servlet:
+    context-path: /myblog
+  error:
+    include-message: always
+  forward-headers-strategy: native
