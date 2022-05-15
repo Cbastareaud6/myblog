@@ -13,12 +13,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(
     name = "posts", uniqueConstraints = {@UniqueConstraint(columnNames = {"title"})})
+@Data
 public class Post {
 
   @Id
@@ -28,6 +29,7 @@ public class Post {
   private String title;
   private String description;
   private String content;
+
 
 
 }
