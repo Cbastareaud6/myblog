@@ -2,9 +2,11 @@ package com.bastareaudcathy.service;
 
 
 import com.bastareaudcathy.entity.Post;
+import com.bastareaudcathy.exception.ResourceNotFoundException;
 import com.bastareaudcathy.payload.PostDto;
 import com.bastareaudcathy.repository.PostRepository;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,8 +25,7 @@ public class PostServiceImplementation implements PostService {
   public PostDto createPost(PostDto postDto) {
     Post post = mapToEntity(postDto);
     Post newPost = postRepository.save(post);
-    PostDto postResponse = mapToDto(post);
-    return postResponse;
+    return mapToDto(post);
   }
 
   @Override
@@ -33,8 +34,28 @@ public class PostServiceImplementation implements PostService {
     return posts.stream()
         .map((post) -> mapToDto(post))
         .collect(Collectors.toList());
-
   }
+
+  @Override
+  public PostDto getPostById(long id) {
+  Post post = postRepository.findById(id).orElseThrow( () -> new ResourceNotFoundException("Post", "id", id));
+  return mapToDto(post);
+  }
+
+  @Override
+  public PostDto updatePost(PostDto postDto, long id) {
+   Post post = new Post();
+   post = postRepository.findById(id).orElseThrow( () -> new ResourceNotFoundException("Post", "id", id));
+   post.setDescription(postDto.getDescription());
+   post.setContent(post.getContent());
+   post.setTitle(postDto.getTitle());
+
+   Post updatedPost = postRepository.save(post);
+   return mapToDto(updatedPost);
+  }
+
+
+
 
   private PostDto mapToDto(Post post) {
     PostDto postDto = new PostDto();
