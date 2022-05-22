@@ -65,6 +65,7 @@ public class PostServiceImplementation implements PostService {
 
   private PostDto mapToDto(Post post) {
     PostDto postDto = new PostDto();
+    postDto.setId(post.getId());
     postDto.setContent(post.getContent());
     postDto.setTitle(post.getTitle());
     postDto.setDescription(post.getDescription());
@@ -74,6 +75,7 @@ public class PostServiceImplementation implements PostService {
 
   private Post mapToEntity(PostDto postDto) {
     Post post = new Post();
+    post.setId(postDto.getId());
     post.setContent(postDto.getContent());
     post.setTitle(postDto.getTitle());
     post.setDescription(postDto.getDescription());
